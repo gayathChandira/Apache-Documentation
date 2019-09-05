@@ -104,6 +104,7 @@ in prefix you enter your installation directory (/home/username/hms/installs/apa
     The method we here using for load balancing is **byrequsts**. There are other methos also like as **bytraffic, bybusyness** and **byheatbeat**
     From going to the link/balancer-manager (example.com/balancer-manager)
     you can see the stats. 
+
     ![](https://i.postimg.cc/2SGFR9XP/Screenshot-from-2019-09-05-12-56-41.png)
     
     
