@@ -14,6 +14,13 @@ in prefix you enter your installation directory (/home/username/hms/installs/apa
  7. Install with ```sudo make install``` command. 
  8. To start the Apache Server just go to the your installation path 
 (installs/apache/bin) and run command ```sudo apachectl -k start```
+
+### Basic commands in Apache
+* To **start** go to (apache/bin) and type `apachectl -k start`
+* To **stop** go to (apache/bin) and type `apachectl -k stop`
+* To **restart** go to (apache/bin) and type `apachectl -k restart`
+* To **restart gracefully** go to (apache/bin) and type `apachectl -k graceful`
+* To **stop gracefully** go to (apache/bin) and type `apachectl -k graceful-stop`
  ***
 
 # Reverse Proxy Configuration
@@ -103,8 +110,7 @@ in prefix you enter your installation directory (/home/username/hms/installs/apa
     in here *mycluster* is our balancer name and we have 2 Balancer Members we assigned for earlier made 2 tomcat servers. 
     The method we here using for load balancing is **byrequsts**. There are other methos also like as **bytraffic, bybusyness** and **byheatbeat**
     From going to the link/balancer-manager (example.com/balancer-manager)
-    you can see the stats. 
-
+    you can see the stats.
     ![](https://i.postimg.cc/2SGFR9XP/Screenshot-from-2019-09-05-12-56-41.png)
     
     
