@@ -110,9 +110,61 @@ in prefix you enter your installation directory (/home/username/hms/installs/apa
     in here *mycluster* is our balancer name and we have 2 Balancer Members we assigned for earlier made 2 tomcat servers. 
     The method we here using for load balancing is **byrequsts**. There are other methos also like as **bytraffic, bybusyness** and **byheatbeat**
     From going to the link/balancer-manager (example.com/balancer-manager)
-    you can see the stats.
-    ![](https://i.postimg.cc/2SGFR9XP/Screenshot-from-2019-09-05-12-56-41.png)
+    you can see the stats.  
     
+![](https://i.postimg.cc/2SGFR9XP/Screenshot-from-2019-09-05-12-56-41.png)
+    
+***  
+ # Creating SSL Certificate for Apache
+ Here we're going to create a self signed certificate for Apache server
+ 1. Create the SSL certificate using following code. 
+``` 
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+```
+we are creating the certificate and key using the OpenSSL. In `-keyout` we set path for creating our key and `out` we mention the path for certificate. This command will ask simple questions like country name, state, email then you fill them accordingly. 
+For OpenSSL we should create a strong Diffie-Hellman group. That can be done by 
+`sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048` command. 
+
+ 2. Create Apache configuration snippet.   
+ For that go to (apache/conf/extra) and open *Httpd-ssl.conf* file and add below commands. Before you do that get a ***backup*** for that file. 
+
+```
+SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH
+SSLProtocol All -SSLv2 -SSLv3
+SSLHonorCipherOrder On
+Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains"
+Header always set X-Frame-Options DENY
+Header always set X-Content-Type-Options nosniff
+# Requires Apache >= 2.4
+SSLCompression off 
+SSLSessionTickets Off
+SSLUseStapling on 
+SSLStaplingCache "shmcb:logs/stapling-cache(150000)"
+
+SSLOpenSSLConfCmd DHParameters "/etc/ssl/certs/dhparam.pem"
+```
+ 3. Change the below codes in the same file. 
+    ```
+    #For server name you enter your's accordingly 
+    ServerName example.com
+    #give the location of your certificate you created earlier
+    SSLCertificateFile      /etc/ssl/certs/apache-selfsigned.crt
+    #location for key file created earlier
+    SSLCertificateKeyFile /etc/ssl/private/apache-selfsigned.key
+    ```
+4. Enable modules in Apache.
+For that go to (apache/conf) and open httpd.conf and uncomment below lines. 
+    ```
+    LoadModule ssl_module modules/mod_ssl.so
+    LoadModule headers_module modules/mod_headers.so
+    LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
+    Include conf/extra/httpd-ssl.conf
+    ```
+5. Now restart the Apache Server
+    `apachectl -k restart`
+6. When you go to https://example.com it will show an error in red saying self signed certificates can not be trusted. And if you click the *Not secure* icon you can see the certificate created by you. 
+ 
+ 
     
 
 
