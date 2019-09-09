@@ -1,15 +1,42 @@
 
 # Apache Manual installation on Ubuntu 16.04
 
- 1. Download Apache Http server from [Apache website](http://httpd.apache.org/download.cgi) (e.g httpd-2.2.13.tar.gz)
- 2. Unzip it using tar command  ```  tar xvfz httpd-2.2.13.tar.gz ```
- 3. Configure folder location
-    ``` ./configure --prefix=/usr/local/apache –enable-shared=max ```
-in prefix you enter your installation directory (/home/username/hms/installs/apache)
- 4. If you got error saying “*APR not found*” then run the below command.
-    ```sudo apt-get install libapr1-dev libaprutil1-dev```    
- 5. Again if you are come up with “*pcre-config for libpcre not found*” error run,
- ```sudo apt-get install libpcre3-dev```
+1. Download Apache Http server from [Apache website](http://httpd.apache.org/download.cgi) (e.g httpd-2.2.13.tar.gz)
+2. Unzip it using tar command  ```  tar xvfz httpd-2.2.13.tar.gz ```
+3. Install Dependencies
+    ##### APR          
+    ```
+    cd /home/username/hms/installs/apache/apr 
+    wget https://www-us.apache.org/dist//apr/apr-1.7.0.tar.gz
+    tar -xvzf apr-1.7.0.tar.gz
+    cd apr-1.7.0/
+    ./configure
+    make    
+    make install
+    ```
+    ##### APR Utils
+    ```
+    cd  /home/username/hms/installs/apache/apr-util
+    wget https://www-us.apache.org/dist//apr/apr-util-1.6.1.tar.gz
+    tar -xvzf apr-util-1.6.1.tar.gz
+    cd apr-util-1.6.1/
+    ./configure --with-apr=/home/username/hms/installs/apache/apr
+    make
+    make install
+    ```
+    ##### pcre
+    ```
+    cd  /home/username/hms/installs/apache/pcre
+    wget https://ftp.pcre.org/pub/pcre/pcre2-10.33.tar.gz
+    tar -xvzf pcre2-10.33.tar.gz
+    cd pcre2-10.33/
+    ./configure
+    make 
+    make install
+    ```
+4. Configure Apache
+     ``` ./configure --prefix=/home/username/hms/installs/apache/4.0 –enable-shared=max --with-apr=/home/username/hms/installs/apache/apr/ -with-pcre=/home/username/hms/installs/apache/pcre```
+ in prefix you enter your installation directory. 
  6. If it configured successfully build it with ``` make ```command. 
  7. Install with ```sudo make install``` command. 
  8. To start the Apache Server just go to the your installation path 
