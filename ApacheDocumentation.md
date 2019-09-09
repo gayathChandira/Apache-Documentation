@@ -6,7 +6,7 @@
 3. Install Dependencies
     ##### APR          
     ```
-    cd /home/username/hms/installs/apache/apr 
+    cd /home/username/hms/installs/apache/4.0/apr 
     wget https://www-us.apache.org/dist//apr/apr-1.7.0.tar.gz
     tar -xvzf apr-1.7.0.tar.gz
     cd apr-1.7.0/
@@ -16,7 +16,7 @@
     ```
     ##### APR Utils
     ```
-    cd  /home/username/hms/installs/apache/apr-util
+    cd  /home/username/hms/installs/apache/4.0/apr-util
     wget https://www-us.apache.org/dist//apr/apr-util-1.6.1.tar.gz
     tar -xvzf apr-util-1.6.1.tar.gz
     cd apr-util-1.6.1/
@@ -26,7 +26,7 @@
     ```
     ##### pcre
     ```
-    cd  /home/username/hms/installs/apache/pcre
+    cd  /home/username/hms/installs/apache/4.0/pcre
     wget https://ftp.pcre.org/pub/pcre/pcre2-10.33.tar.gz
     tar -xvzf pcre2-10.33.tar.gz
     cd pcre2-10.33/
@@ -35,7 +35,7 @@
     make install
     ```
 4. Configure Apache
-     ``` ./configure --prefix=/home/username/hms/installs/apache/4.0 –enable-shared=max --with-apr=/home/username/hms/installs/apache/apr/ -with-pcre=/home/username/hms/installs/apache/pcre```
+     ``` ./configure --prefix=/home/username/hms/installs/apache/4.0 –enable-shared=max --with-apr=/home/username/hms/installs/apache/4.0/apr/ -with-pcre=/home/username/hms/installs/apache/4.0/pcre```
  in prefix you enter your installation directory. 
  6. If it configured successfully build it with ``` make ```command. 
  7. Install with ```sudo make install``` command. 
